@@ -1,25 +1,24 @@
 {% set name = "nodebook" %}
 {% set version = "0.2.1" %}
-{% set sha256 = "b0cbb9cee2deea33b3dc3d1c195b3b96a636dcdec18201cb99eb59f9c0d93a63" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: http://github.com/stitchfix/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: b0cbb9cee2deea33b3dc3d1c195b3b96a636dcdec18201cb99eb59f9c0d93a63
 
 build:
   number: 1
-  script: python setup.py install --single-version-externally-managed --record record.txt
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   noarch: python
 
 requirements:
   host:
     - python {{ python_min }}
     - setuptools
+    - pip
   run:
     - python >={{ python_min }}
     - ipython
